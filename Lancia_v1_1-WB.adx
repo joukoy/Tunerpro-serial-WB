@@ -1,0 +1,1150 @@
+<ADXFORMAT version="1.01">
+  <!-- Written 07/17/2024 19:45:41 -->
+  <ADXHEADER>
+    <guid>52a4b006-d43a-4f27-8f32-3b9fa47a45f4</guid>
+    <flags>0x10000</flags>
+    <objectcount>122</objectcount>
+    <userversion>1.1</userversion>
+    <author>Dr. Rob</author>
+    <desc>Marelli P8 ECU (Lancia, Fiat, Cosworth), all Information comes from the Original Fiat P8 Document #3.00608 which covers the P8 Family from Dec. 94.&#013;&#010;Lookup Table Hack with TPS Value.</desc>
+    <baud>7816</baud>
+    <DEFAULTS datasizeinbits="8" sigdigits="2" outputtype="3" baud="0" signed="0" lsbfirst="0" float="0" />
+    <monitorcmd>M01</monitorcmd>
+  </ADXHEADER>
+
+  <ADXCSENDCOMMAND id="SENDWBO2" idhash="0x83B585ED" title="Send WB request">
+    <desc>Request AFR</desc>
+    <bytestring size="0x4">57424F32</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXLOOKUPTABLE id="L02" idhash="0xCD501DDB" title="TPS">
+    <inputtype>1</inputtype>
+    <outputtype>3</outputtype>
+    <lookupmode>0</lookupmode>
+    <entrycount>4</entrycount>
+    <tableentry input="0.000000" output="0.000000" />
+    <tableentry input="169.000000" output="29.821199" />
+    <tableentry input="170.000000" output="30.000000" />
+    <tableentry input="255.000000" output="90.000000" />
+  </ADXLOOKUPTABLE>
+
+  <ADXVALUE id="V01H" idhash="0xAA50F579" title="RPM_HI">
+    <parentcmdidhash>0xCD30077B</parentcmdidhash>
+    <packetoffset>0x00</packetoffset>
+    <range low="0.000000" high="255.000000" />
+    <alarms low="0.000000" high="255.000000" />
+    <digcount>2</digcount>
+    <outputtype>3</outputtype>
+    <MATH equation="X">
+      <VAR varID="X" type="native" />
+    </MATH>
+  </ADXVALUE>
+
+  <ADXVALUE id="WBAFR" idhash="0x1A5C3D54" title="WB AFR">
+    <parentcmdidhash>0x156A65BB</parentcmdidhash>
+    <packetoffset>0x00</packetoffset>
+    <sizeinbits>16</sizeinbits>
+    <range low="0.000000" high="255.000000" />
+    <alarms low="0.000000" high="255.000000" />
+    <digcount>2</digcount>
+    <outputtype>3</outputtype>
+    <datatype>28</datatype>
+    <MATH equation="X/10">
+      <VAR varID="X" type="native" />
+    </MATH>
+  </ADXVALUE>
+
+  <ADXVALUE id="V02L" idhash="0xAA53B699" title="RPM_LO">
+    <parentcmdidhash>0xCD301DDB</parentcmdidhash>
+    <packetoffset>0x00</packetoffset>
+    <range low="0.000000" high="255.000000" />
+    <alarms low="0.000000" high="255.000000" />
+    <digcount>2</digcount>
+    <outputtype>3</outputtype>
+    <MATH equation="X">
+      <VAR varID="X" type="native" />
+    </MATH>
+  </ADXVALUE>
+
+  <ADXVALUE id="V01" idhash="0xCD52877B" title="RPM">
+    <packetoffset>0x00</packetoffset>
+    <sizeinbits>16</sizeinbits>
+    <range low="0.000000" high="8000.000000" />
+    <alarms low="0.000000" high="255.000000" />
+    <digcount>2</digcount>
+    <outputtype>3</outputtype>
+    <datatype>6</datatype>
+    <unittype>4</unittype>
+    <MATH equation="30000000/(a*256+b)">
+      <VAR varID="a" type="link" linkIDHash="0xAA50F579" />
+      <VAR varID="b" type="link" linkIDHash="0xAA53B699" />
+    </MATH>
+  </ADXVALUE>
+
+  <ADXVALUE id="V03H" idhash="0xAA504179" title="Inj_Time_H">
+    <parentcmdidhash>0xCD3002DB</parentcmdidhash>
+    <packetoffset>0x00</packetoffset>
+    <range low="0.000000" high="255.000000" />
+    <alarms low="0.000000" high="255.000000" />
+    <digcount>2</digcount>
+    <outputtype>3</outputtype>
+    <MATH equation="X">
+      <VAR varID="X" type="native" />
+    </MATH>
+  </ADXVALUE>
+
+  <ADXVALUE id="V04L" idhash="0xAA501699" title="Inj_Time_L">
+    <parentcmdidhash>0xCD3000DB</parentcmdidhash>
+    <packetoffset>0x00</packetoffset>
+    <range low="0.000000" high="255.000000" />
+    <alarms low="0.000000" high="255.000000" />
+    <digcount>2</digcount>
+    <outputtype>3</outputtype>
+    <MATH equation="X">
+      <VAR varID="X" type="native" />
+    </MATH>
+  </ADXVALUE>
+
+  <ADXVALUE id="V03" idhash="0xCD5282DB" title="Inj_Time">
+    <packetoffset>0x00</packetoffset>
+    <sizeinbits>16</sizeinbits>
+    <range low="0.000000" high="20.000000" />
+    <alarms low="0.000000" high="255.000000" />
+    <digcount>2</digcount>
+    <outputtype>3</outputtype>
+    <datatype>51</datatype>
+    <unittype>85</unittype>
+    <MATH equation="4*(c*256+d)/1000">
+      <VAR varID="c" type="link" linkIDHash="0xAA504179" />
+      <VAR varID="d" type="link" linkIDHash="0xAA501699" />
+    </MATH>
+  </ADXVALUE>
+
+  <ADXVALUE id="V05" idhash="0xCD5297BB" title="Ignition Advance">
+    <parentcmdidhash>0xCD3017BB</parentcmdidhash>
+    <packetoffset>0x00</packetoffset>
+    <range low="0.000000" high="64.000000" />
+    <alarms low="0.000000" high="255.000000" />
+    <digcount>2</digcount>
+    <outputtype>3</outputtype>
+    <datatype>38</datatype>
+    <unittype>23</unittype>
+    <MATH equation="X/4">
+      <VAR varID="X" type="native" />
+    </MATH>
+  </ADXVALUE>
+
+  <ADXVALUE id="V06" idhash="0xCD52941B" title="MAP">
+    <parentcmdidhash>0xCD30141B</parentcmdidhash>
+    <packetoffset>0x00</packetoffset>
+    <range low="0.000000" high="105.000000" />
+    <alarms low="0.000000" high="255.000000" />
+    <digcount>2</digcount>
+    <outputtype>3</outputtype>
+    <datatype>24</datatype>
+    <unittype>17</unittype>
+    <MATH equation="(X*2.8758+91)*0.13328">
+      <VAR varID="X" type="native" />
+    </MATH>
+  </ADXVALUE>
+
+  <ADXVALUE id="V07" idhash="0xCD528E5B" title="MAT">
+    <parentcmdidhash>0xCD300E5B</parentcmdidhash>
+    <packetoffset>0x00</packetoffset>
+    <range low="-55.000000" high="125.000000" />
+    <alarms low="0.000000" high="255.000000" />
+    <digcount>2</digcount>
+    <outputtype>3</outputtype>
+    <datatype>19</datatype>
+    <unittype>15</unittype>
+    <MATH equation="X" lookupidhash="0xCD50077B">
+      <VAR varID="X" type="native" />
+    </MATH>
+  </ADXVALUE>
+
+  <ADXVALUE id="V08" idhash="0xCD52831B" title="CTS">
+    <parentcmdidhash>0xCD30031B</parentcmdidhash>
+    <packetoffset>0x00</packetoffset>
+    <range low="-55.000000" high="125.000000" />
+    <alarms low="0.000000" high="255.000000" />
+    <digcount>2</digcount>
+    <outputtype>3</outputtype>
+    <datatype>13</datatype>
+    <unittype>15</unittype>
+    <MATH equation="X" lookupidhash="0xCD50077B">
+      <VAR varID="X" type="native" />
+    </MATH>
+  </ADXVALUE>
+
+  <ADXVALUE id="V09" idhash="0xCD52945B" title="TPS">
+    <parentcmdidhash>0xCD30145B</parentcmdidhash>
+    <packetoffset>0x00</packetoffset>
+    <range low="0.000000" high="90.000000" />
+    <alarms low="0.000000" high="255.000000" />
+    <digcount>2</digcount>
+    <outputtype>3</outputtype>
+    <datatype>57</datatype>
+    <unittype>23</unittype>
+    <MATH equation="X" lookupidhash="0xCD501DDB">
+      <VAR varID="X" type="native" />
+    </MATH>
+  </ADXVALUE>
+
+  <ADXVALUE id="V0a" idhash="0xCD528D1B" title="Battery Voltage">
+    <parentcmdidhash>0xCD300D1B</parentcmdidhash>
+    <packetoffset>0x00</packetoffset>
+    <range low="8.000000" high="14.000000" />
+    <alarms low="0.000000" high="255.000000" />
+    <digcount>2</digcount>
+    <outputtype>3</outputtype>
+    <datatype>66</datatype>
+    <unittype>32</unittype>
+    <MATH equation="X*0.0628">
+      <VAR varID="X" type="native" />
+    </MATH>
+  </ADXVALUE>
+
+  <ADXVALUE id="V0b" idhash="0xCD52989B" title="Trimmer">
+    <parentcmdidhash>0xCD30189B</parentcmdidhash>
+    <packetoffset>0x00</packetoffset>
+    <range low="0.000000" high="255.000000" />
+    <alarms low="0.000000" high="255.000000" />
+    <digcount>2</digcount>
+    <outputtype>3</outputtype>
+    <MATH equation="X-128">
+      <VAR varID="X" type="native" />
+    </MATH>
+  </ADXVALUE>
+
+  <ADXVALUE id="V0c" idhash="0xCD52837B" title="Injector Angle">
+    <parentcmdidhash>0xCD30037B</parentcmdidhash>
+    <packetoffset>0x00</packetoffset>
+    <range low="0.000000" high="720.000000" />
+    <alarms low="0.000000" high="255.000000" />
+    <digcount>2</digcount>
+    <outputtype>3</outputtype>
+    <unittype>23</unittype>
+    <MATH equation="720-(X*90/4)">
+      <VAR varID="X" type="native" />
+    </MATH>
+  </ADXVALUE>
+
+  <ADXVALUE id="V0dH" idhash="0xAA535979" title="VAE Duty Cycle H">
+    <parentcmdidhash>0xCD301A1B</parentcmdidhash>
+    <packetoffset>0x00</packetoffset>
+    <range low="0.000000" high="255.000000" />
+    <alarms low="0.000000" high="255.000000" />
+    <digcount>2</digcount>
+    <outputtype>3</outputtype>
+    <MATH equation="X">
+      <VAR varID="X" type="native" />
+    </MATH>
+  </ADXVALUE>
+
+  <ADXVALUE id="V0eL" idhash="0xAA535A99" title="VAE Duty Cycle L">
+    <parentcmdidhash>0xCD301ABB</parentcmdidhash>
+    <packetoffset>0x00</packetoffset>
+    <range low="0.000000" high="255.000000" />
+    <alarms low="0.000000" high="255.000000" />
+    <digcount>2</digcount>
+    <outputtype>3</outputtype>
+    <MATH equation="X">
+      <VAR varID="X" type="native" />
+    </MATH>
+  </ADXVALUE>
+
+  <ADXVALUE id="V0d" idhash="0xCD529A1B" title="VAE Duty Cycle">
+    <packetoffset>0x00</packetoffset>
+    <sizeinbits>16</sizeinbits>
+    <range low="0.000000" high="100.000000" />
+    <alarms low="0.000000" high="255.000000" />
+    <digcount>2</digcount>
+    <outputtype>3</outputtype>
+    <unittype>67</unittype>
+    <MATH equation="(e*256+f)*100/65535">
+      <VAR varID="e" type="link" linkIDHash="0xAA535979" />
+      <VAR varID="f" type="link" linkIDHash="0xAA535A99" />
+    </MATH>
+  </ADXVALUE>
+
+  <ADXVALUE id="V12H" idhash="0xAA6AA179" title="Lambda Integrator H">
+    <parentcmdidhash>0xCD31D5DB</parentcmdidhash>
+    <packetoffset>0x00</packetoffset>
+    <range low="0.000000" high="255.000000" />
+    <alarms low="0.000000" high="255.000000" />
+    <digcount>2</digcount>
+    <outputtype>3</outputtype>
+    <MATH equation="X">
+      <VAR varID="X" type="native" />
+    </MATH>
+  </ADXVALUE>
+
+  <ADXVALUE id="V13L" idhash="0xAA695699" title="Lambda Integrator L">
+    <parentcmdidhash>0xCD31CADB</parentcmdidhash>
+    <packetoffset>0x00</packetoffset>
+    <range low="0.000000" high="255.000000" />
+    <alarms low="0.000000" high="255.000000" />
+    <digcount>2</digcount>
+    <outputtype>3</outputtype>
+    <MATH equation="X">
+      <VAR varID="X" type="native" />
+    </MATH>
+  </ADXVALUE>
+
+  <ADXVALUE id="V13" idhash="0xCD534ADB" title="Lambda Integrator">
+    <parentcmdidhash>0xCD31CADB</parentcmdidhash>
+    <packetoffset>0x00</packetoffset>
+    <sizeinbits>16</sizeinbits>
+    <range low="0.000000" high="100.000000" />
+    <alarms low="0.000000" high="255.000000" />
+    <digcount>2</digcount>
+    <outputtype>3</outputtype>
+    <unittype>67</unittype>
+    <MATH equation="(e*256+f)*125/100000">
+      <VAR varID="e" type="link" linkIDHash="0xAA6AA179" />
+      <VAR varID="f" type="link" linkIDHash="0xAA695699" />
+    </MATH>
+  </ADXVALUE>
+
+  <ADXLOOKUPTABLE id="L01" idhash="0xCD50077B" title="CTS">
+    <inputtype>1</inputtype>
+    <outputtype>3</outputtype>
+    <lookupmode>0</lookupmode>
+    <entrycount>16</entrycount>
+    <tableentry input="0.000000" output="125.000000" />
+    <tableentry input="16.000000" output="125.000000" />
+    <tableentry input="32.000000" output="125.000000" />
+    <tableentry input="48.000000" output="78.600006" />
+    <tableentry input="64.000000" output="59.200001" />
+    <tableentry input="80.000000" output="47.500000" />
+    <tableentry input="96.000000" output="37.900002" />
+    <tableentry input="112.000000" output="29.500000" />
+    <tableentry input="128.000000" output="22.000000" />
+    <tableentry input="144.000000" output="14.000000" />
+    <tableentry input="160.000000" output="6.200000" />
+    <tableentry input="176.000000" output="-1.800000" />
+    <tableentry input="192.000000" output="-11.800000" />
+    <tableentry input="208.000000" output="-28.700001" />
+    <tableentry input="224.000000" output="-55.000000" />
+    <tableentry input="240.000000" output="-55.000000" />
+  </ADXLOOKUPTABLE>
+
+  <ADXBITMASK id="B15_0" idhash="0xEB7D2015" title="UNIS_0">
+    <parentcmdidhash>0xCD31DFBB</parentcmdidhash>
+    <truestring>DIGIMATIC</truestring>
+    <falsestring>?</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000001</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B15_1" idhash="0xEB7D2E55" title="UNIS_1">
+    <parentcmdidhash>0xCD31DFBB</parentcmdidhash>
+    <truestring>Decr Adv.</truestring>
+    <falsestring>No Decr. Adv.</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000002</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B15_2" idhash="0xEB7D34F5" title="UNIS_2">
+    <parentcmdidhash>0xCD31DFBB</parentcmdidhash>
+    <truestring>Sig Panel OK</truestring>
+    <falsestring>Wait for Sign Panel</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000004</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B15_3" idhash="0xEB7D2BF5" title="UNIS_3">
+    <parentcmdidhash>0xCD31DFBB</parentcmdidhash>
+    <truestring>TPS Min or Max</truestring>
+    <falsestring>TPS middle</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000008</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B15_4" idhash="0xEB7D29F5" title="UNIS_4">
+    <parentcmdidhash>0xCD31DFBB</parentcmdidhash>
+    <truestring>ABS act.</truestring>
+    <falsestring>ABS non act</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000010</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B15_5" idhash="0xEB7D3E95" title="UNIS_5">
+    <parentcmdidhash>0xCD31DFBB</parentcmdidhash>
+    <truestring>A/C</truestring>
+    <falsestring>no A/C</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000020</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B15_6" idhash="0xEB7D3D35" title="UNIS_6">
+    <parentcmdidhash>0xCD31DFBB</parentcmdidhash>
+    <truestring>Drive</truestring>
+    <falsestring>Neutral</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000040</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B15_7" idhash="0xEB7D2775" title="UNIS_7">
+    <parentcmdidhash>0xCD31DFBB</parentcmdidhash>
+    <truestring>VAE Self Clean</truestring>
+    <falsestring>VAE norm</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000080</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B14_7" idhash="0xEB20A775" title="Lambda Control">
+    <desc>Highest Bit of FLGSMA is for Lambda Control Strategy (Closed or Open Loop)</desc>
+    <parentcmdidhash>0xCD31C8DB</parentcmdidhash>
+    <truestring>Closed Loop</truestring>
+    <falsestring>Open Loop</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000080</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B11_0" idhash="0xEB3E2015" title="UNI3_0">
+    <parentcmdidhash>0xCD31CF7B</parentcmdidhash>
+    <truestring>MAX Lean</truestring>
+    <falsestring>MAX Rich</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000001</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B11_1" idhash="0xEB3E2E55" title="UNI3_1">
+    <parentcmdidhash>0xCD31CF7B</parentcmdidhash>
+    <truestring>MAT SC p</truestring>
+    <falsestring>MAT OC</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000002</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B11_2" idhash="0xEB3E34F5" title="UNI3_2">
+    <parentcmdidhash>0xCD31CF7B</parentcmdidhash>
+    <truestring>CTS SC</truestring>
+    <falsestring>CTS OC</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000004</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B11_3" idhash="0xEB3E2BF5" title="UNI3_3">
+    <parentcmdidhash>0xCD31CF7B</parentcmdidhash>
+    <truestring>TPS SC</truestring>
+    <falsestring>TPS OC</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000008</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B11_4" idhash="0xEB3E29F5" title="UNI3_4">
+    <parentcmdidhash>0xCD31CF7B</parentcmdidhash>
+    <truestring>SMOT conseq SC</truestring>
+    <falsestring>no SMOT</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000010</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B11_5" idhash="0xEB3E3E95" title="UNI3_5">
+    <parentcmdidhash>0xCD31CF7B</parentcmdidhash>
+    <truestring>SMOT SC</truestring>
+    <falsestring>SMOT OC</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000020</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B11_6" idhash="0xEB3E3D35" title="UNI3_6">
+    <parentcmdidhash>0xCD31CF7B</parentcmdidhash>
+    <truestring>CAM SC</truestring>
+    <falsestring>CAM OC</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000040</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B11_7" idhash="0xEB3E2775" title="UNI3_7">
+    <parentcmdidhash>0xCD31CF7B</parentcmdidhash>
+    <truestring>MAP SC</truestring>
+    <falsestring>MAP OC</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000080</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B10_0" idhash="0xEB072015" title="UNI2_0">
+    <parentcmdidhash>0xCD31C13B</parentcmdidhash>
+    <truestring>CAM p</truestring>
+    <falsestring>CAM o</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000001</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B10_1" idhash="0xEB072E55" title="UNI2_1">
+    <parentcmdidhash>0xCD31C13B</parentcmdidhash>
+    <truestring>SP p</truestring>
+    <falsestring>SP o</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000002</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B10_2" idhash="0xEB0734F5" title="UNI2_2">
+    <parentcmdidhash>0xCD31C13B</parentcmdidhash>
+    <truestring>EP p</truestring>
+    <falsestring>EP o</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000004</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B10_3" idhash="0xEB072BF5" title="UNI2_3">
+    <parentcmdidhash>0xCD31C13B</parentcmdidhash>
+    <truestring>EE p</truestring>
+    <falsestring>EE o</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000008</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B10_4" idhash="0xEB0729F5" title="UNI2_4">
+    <parentcmdidhash>0xCD31C13B</parentcmdidhash>
+    <truestring>Drive</truestring>
+    <falsestring>Neutral</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000010</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B10_5" idhash="0xEB073E95" title="UNI2_5">
+    <parentcmdidhash>0xCD31C13B</parentcmdidhash>
+    <truestring>Digim p</truestring>
+    <falsestring>Digim o</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000020</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B10_6" idhash="0xEB073D35" title="UNI2_6">
+    <parentcmdidhash>0xCD31C13B</parentcmdidhash>
+    <truestring>RAM p</truestring>
+    <falsestring>RAM o</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000040</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B10_7" idhash="0xEB072775" title="UNI2_7">
+    <parentcmdidhash>0xCD31C13B</parentcmdidhash>
+    <truestring>SMOT p</truestring>
+    <falsestring>SMOT o</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000080</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B0f_0" idhash="0xEC64A015" title="UNI1_0">
+    <parentcmdidhash>0xCD3019DB</parentcmdidhash>
+    <truestring>VAE p</truestring>
+    <falsestring>VAE o</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000001</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B0f_1" idhash="0xEC64AE55" title="UNI1_1">
+    <parentcmdidhash>0xCD3019DB</parentcmdidhash>
+    <truestring>Mixture p</truestring>
+    <falsestring>Mixture o</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000002</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B0f_2" idhash="0xEC64B4F5" title="UNI1_2">
+    <parentcmdidhash>0xCD3019DB</parentcmdidhash>
+    <truestring>MAT p</truestring>
+    <falsestring>MAT o</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000004</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B0f_3" idhash="0xEC64ABF5" title="UNI1_3">
+    <parentcmdidhash>0xCD3019DB</parentcmdidhash>
+    <truestring>Knock p</truestring>
+    <falsestring>Knock o</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000008</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B0f_4" idhash="0xEC64A9F5" title="UNI1_4">
+    <parentcmdidhash>0xCD3019DB</parentcmdidhash>
+    <truestring>CTS p</truestring>
+    <falsestring>CTS o</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000010</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B0f_5" idhash="0xEC64BE95" title="UNI1_5">
+    <parentcmdidhash>0xCD3019DB</parentcmdidhash>
+    <truestring>Lambda p</truestring>
+    <falsestring>Lambda o</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000020</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B0f_6" idhash="0xEC64BD35" title="UNI1_6">
+    <parentcmdidhash>0xCD3019DB</parentcmdidhash>
+    <truestring>MAP p</truestring>
+    <falsestring>MAP o</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000040</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXBITMASK id="B0f_7" idhash="0xEC64A775" title="UNI1_7">
+    <parentcmdidhash>0xCD3019DB</parentcmdidhash>
+    <truestring>TPS p</truestring>
+    <falsestring>TPS o</falsestring>
+    <ALARMONSET color="0x000000FF" />
+    <ALARMONNOTSET color="0x0000FF00" />
+    <packetoffset>0x00</packetoffset>
+    <operand>0x00000080</operand>
+    <bitop>AND</bitop>
+  </ADXBITMASK>
+
+  <ADXDASHBOARD id="D01" idhash="0xCD79877B" title="Lancia Dash">
+    <entrycount>46</entrycount>
+    <ADXDGENTRY gaugetype="0" itemidhash="0xCD52877B" left="0" top="0" right="20" bottom="30" arcmax="300" />
+    <ADXDGENTRY gaugetype="0" itemidhash="0xCD5297BB" left="20" top="0" right="40" bottom="30" arcmax="300" />
+    <ADXDGENTRY gaugetype="0" itemidhash="0xCD5282DB" left="40" top="0" right="60" bottom="30" arcmax="300" />
+    <ADXDGENTRY gaugetype="0" itemidhash="0xCD52837B" left="60" top="0" right="80" bottom="30" arcmax="300" />
+    <ADXDGENTRY gaugetype="0" itemidhash="0xCD534ADB" left="80" top="0" right="100" bottom="30" arcmax="300" />
+    <ADXDGENTRY gaugetype="0" itemidhash="0xCD52945B" left="0" top="30" right="20" bottom="60" arcmax="300" />
+    <ADXDGENTRY gaugetype="0" itemidhash="0xCD528D1B" left="20" top="30" right="40" bottom="60" arcmax="300" />
+    <ADXDGENTRY gaugetype="0" itemidhash="0xCD52941B" left="40" top="30" right="60" bottom="60" arcmax="300" />
+    <ADXDGENTRY gaugetype="0" itemidhash="0xCD52831B" left="60" top="30" right="80" bottom="60" arcmax="300" />
+    <ADXDGENTRY gaugetype="0" itemidhash="0xCD528E5B" left="80" top="30" right="100" bottom="60" arcmax="300" />
+    <ADXDGENTRY gaugetype="1" itemidhash="0xCD52989B" left="90" top="60" right="100" bottom="70" />
+    <ADXDGENTRY gaugetype="1" itemidhash="0xCD529A1B" left="90" top="80" right="100" bottom="90" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEC64A015" left="0" top="90" right="10" bottom="100" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEC64AE55" left="10" top="90" right="20" bottom="100" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEC64B4F5" left="20" top="90" right="30" bottom="100" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEC64ABF5" left="30" top="90" right="40" bottom="100" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEC64A9F5" left="40" top="90" right="50" bottom="100" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEC64BE95" left="50" top="90" right="60" bottom="100" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEC64BD35" left="60" top="90" right="70" bottom="100" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEC64A775" left="70" top="90" right="80" bottom="100" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEB072015" left="0" top="80" right="10" bottom="90" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEB072E55" left="10" top="80" right="20" bottom="90" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEB0734F5" left="20" top="80" right="30" bottom="90" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEB072BF5" left="30" top="80" right="40" bottom="90" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEB0729F5" left="40" top="80" right="50" bottom="90" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEB073E95" left="50" top="80" right="60" bottom="90" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEB073D35" left="60" top="80" right="70" bottom="90" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEB072775" left="70" top="80" right="80" bottom="90" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEB3E2015" left="0" top="70" right="10" bottom="80" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEB3E2E55" left="10" top="70" right="20" bottom="80" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEB3E34F5" left="20" top="70" right="30" bottom="80" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEB3E2BF5" left="30" top="70" right="40" bottom="80" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEB3E29F5" left="40" top="70" right="50" bottom="80" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEB3E3E95" left="50" top="70" right="60" bottom="80" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEB3E3D35" left="60" top="70" right="70" bottom="80" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEB3E2775" left="70" top="70" right="80" bottom="80" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEB7D2015" left="0" top="60" right="10" bottom="70" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEB7D2E55" left="10" top="60" right="20" bottom="70" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEB7D34F5" left="20" top="60" right="30" bottom="70" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEB7D2BF5" left="30" top="60" right="40" bottom="70" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEB7D29F5" left="40" top="60" right="50" bottom="70" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEB7D3E95" left="50" top="60" right="60" bottom="70" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEB7D3D35" left="60" top="60" right="70" bottom="70" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEB7D2775" left="70" top="60" right="80" bottom="70" setbkgndcolor="0x000000FF" clearbkgndcolor="0x0037F40B" />
+    <ADXDGENTRY gaugetype="2" itemidhash="0xEB20A775" left="80" top="90" right="90" bottom="100" />
+    <ADXDGENTRY gaugetype="1" itemidhash="0x1A5C3D54" left="80" top="70" right="90" bottom="80" />
+  </ADXDASHBOARD>
+
+  <ADXMACRO id="M01" idhash="0xCD78877B" title="GetData" repeatcount="1">
+    <NODE commandID="S01" repeatcount="1" />
+    <NODE commandID="G01" repeatcount="1" />
+    <NODE commandID="S02" repeatcount="1" />
+    <NODE commandID="G02" repeatcount="1" />
+    <NODE commandID="S03" repeatcount="1" />
+    <NODE commandID="G03" repeatcount="1" />
+    <NODE commandID="S04" repeatcount="1" />
+    <NODE commandID="G04" repeatcount="1" />
+    <NODE commandID="S05" repeatcount="1" />
+    <NODE commandID="G05" repeatcount="1" />
+    <NODE commandID="S06" repeatcount="1" />
+    <NODE commandID="G06" repeatcount="1" />
+    <NODE commandID="S07" repeatcount="1" />
+    <NODE commandID="G07" repeatcount="1" />
+    <NODE commandID="S08" repeatcount="1" />
+    <NODE commandID="G08" repeatcount="1" />
+    <NODE commandID="S09" repeatcount="1" />
+    <NODE commandID="G09" repeatcount="1" />
+    <NODE commandID="S0a" repeatcount="1" />
+    <NODE commandID="G0a" repeatcount="1" />
+    <NODE commandID="S0b" repeatcount="1" />
+    <NODE commandID="G0b" repeatcount="1" />
+    <NODE commandID="S0c" repeatcount="1" />
+    <NODE commandID="G0c" repeatcount="1" />
+    <NODE commandID="S0d" repeatcount="1" />
+    <NODE commandID="G0d" repeatcount="1" />
+    <NODE commandID="S0e" repeatcount="1" />
+    <NODE commandID="G0e" repeatcount="1" />
+    <NODE commandID="S0f" repeatcount="1" />
+    <NODE commandID="G0f" repeatcount="1" />
+    <NODE commandID="S10" repeatcount="1" />
+    <NODE commandID="G10" repeatcount="1" />
+    <NODE commandID="S11" repeatcount="1" />
+    <NODE commandID="G11" repeatcount="1" />
+    <NODE commandID="S12" repeatcount="1" />
+    <NODE commandID="G12" repeatcount="1" />
+    <NODE commandID="S13" repeatcount="1" />
+    <NODE commandID="G13" repeatcount="1" />
+    <NODE commandID="S14" repeatcount="1" />
+    <NODE commandID="G14" repeatcount="1" />
+    <NODE commandID="S15" repeatcount="1" />
+    <NODE commandID="G15" repeatcount="1" />
+    <NODE commandID="S16" repeatcount="1" />
+    <NODE commandID="G16" repeatcount="1" />
+    <NODE commandID="S17" repeatcount="1" />
+    <NODE commandID="G17" repeatcount="1" />
+    <NODE commandID="S18" repeatcount="1" />
+    <NODE commandID="G18" repeatcount="1" />
+    <NODE commandID="S19" repeatcount="1" />
+    <NODE commandID="G19" repeatcount="1" />
+    <NODE commandID="S1a" repeatcount="1" />
+    <NODE commandID="G1a" repeatcount="1" />
+    <NODE commandID="SENDWBO2" repeatcount="1" />
+    <NODE commandID="WAITFORAFR" repeatcount="1" />
+  </ADXMACRO>
+
+  <ADXCLISTENPACKET id="G01" idhash="0xCD30077B" title="Wait for 1" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="WAITFORAFR" idhash="0x156A65BB" title="Wait for AFR" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>2</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>2</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G02" idhash="0xCD301DDB" title="Wait for 2" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G03" idhash="0xCD3002DB" title="Wait for 3" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G04" idhash="0xCD3000DB" title="Wait for 4" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G05" idhash="0xCD3017BB" title="Wait for 5" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G06" idhash="0xCD30141B" title="Wait for 6" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G07" idhash="0xCD300E5B" title="Wait for 7" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G08" idhash="0xCD30031B" title="Wait for 8" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G09" idhash="0xCD30145B" title="Wait for 9" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G0a" idhash="0xCD300D1B" title="Wait for 0a" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G0b" idhash="0xCD30189B" title="Wait for 0b" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G0c" idhash="0xCD30037B" title="Wait for 0c" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G0d" idhash="0xCD301A1B" title="Wait for 0d" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G0e" idhash="0xCD301ABB" title="Wait for 0e" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G0f" idhash="0xCD3019DB" title="Wait for 0F" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G10" idhash="0xCD31C13B" title="Wait for 10" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G11" idhash="0xCD31CF7B" title="Wait for 11" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G12" idhash="0xCD31D5DB" title="Wait for 12" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G13" idhash="0xCD31CADB" title="Wait for 13" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G14" idhash="0xCD31C8DB" title="Wait for 14" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G15" idhash="0xCD31DFBB" title="Wait for 15" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G16" idhash="0xCD31DC1B" title="Wait for 16" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G17" idhash="0xCD31C65B" title="Wait for 17" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G18" idhash="0xCD31CB1B" title="Wait for 18" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G19" idhash="0xCD31DC5B" title="Wait for 19" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G1a" idhash="0xCD31C51B" title="Wait for 1a" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G1b" idhash="0xCD31D09B" title="Wait for 1b" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G1c" idhash="0xCD31CB7B" title="Wait for 1c" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G1d" idhash="0xCD31D21B" title="Wait for 1d" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G1e" idhash="0xCD31D2BB" title="Wait for 1e" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCLISTENPACKET id="G1f" idhash="0xCD31D1DB" title="Wait for 1f" flags="0x00000005">
+    <listentimeout>50</listentimeout>
+    <packetbodylength>1</packetbodylength>
+    <packetoffsetinbody>0</packetoffsetinbody>
+    <packetsize>1</packetsize>
+  </ADXCLISTENPACKET>
+
+  <ADXCSENDCOMMAND id="S01" idhash="0xCD7A877B" title="Send 1">
+    <bytestring size="0x1">01</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S02" idhash="0xCD7A9DDB" title="Send 2">
+    <bytestring size="0x1">02</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S03" idhash="0xCD7A82DB" title="Send 3">
+    <bytestring size="0x1">03</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S04" idhash="0xCD7A80DB" title="Send 4">
+    <bytestring size="0x1">04</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S05" idhash="0xCD7A97BB" title="Send 5">
+    <bytestring size="0x1">05</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S06" idhash="0xCD7A941B" title="Send 6">
+    <bytestring size="0x1">06</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S07" idhash="0xCD7A8E5B" title="Send 7">
+    <bytestring size="0x1">07</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S08" idhash="0xCD7A831B" title="Send 8">
+    <bytestring size="0x1">08</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S09" idhash="0xCD7A945B" title="Send 9">
+    <bytestring size="0x1">09</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S0a" idhash="0xCD7A8D1B" title="Send A">
+    <bytestring size="0x1">0A</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S0b" idhash="0xCD7A989B" title="Send B">
+    <bytestring size="0x1">0B</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S0c" idhash="0xCD7A837B" title="Send C">
+    <bytestring size="0x1">0C</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S0d" idhash="0xCD7A9A1B" title="Send D">
+    <bytestring size="0x1">0D</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S0e" idhash="0xCD7A9ABB" title="Send E">
+    <bytestring size="0x1">0E</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S0f" idhash="0xCD7A99DB" title="Send F">
+    <bytestring size="0x1">0F</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S10" idhash="0xCD7B413B" title="Send 10">
+    <bytestring size="0x1">10</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S11" idhash="0xCD7B4F7B" title="Send 11">
+    <bytestring size="0x1">11</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S12" idhash="0xCD7B55DB" title="Send 12">
+    <bytestring size="0x1">12</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S13" idhash="0xCD7B4ADB" title="Send 13">
+    <bytestring size="0x1">13</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S14" idhash="0xCD7B48DB" title="Send 14">
+    <bytestring size="0x1">14</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S15" idhash="0xCD7B5FBB" title="Send 15">
+    <bytestring size="0x1">15</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S16" idhash="0xCD7B5C1B" title="Send 16">
+    <bytestring size="0x1">16</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S17" idhash="0xCD7B465B" title="Send 17">
+    <bytestring size="0x1">17</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S18" idhash="0xCD7B4B1B" title="Send 18">
+    <bytestring size="0x1">18</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S19" idhash="0xCD7B5C5B" title="Send 19">
+    <bytestring size="0x1">19</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S1a" idhash="0xCD7B451B" title="Send 1A">
+    <bytestring size="0x1">1A</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S1b" idhash="0xCD7B509B" title="Send 1B">
+    <bytestring size="0x1">1B</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S1c" idhash="0xCD7B4B7B" title="Send 1C">
+    <bytestring size="0x1">1C</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S1d" idhash="0xCD7B521B" title="Send 1D">
+    <bytestring size="0x1">1D</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S1e" idhash="0xCD7B52BB" title="Send 1E">
+    <bytestring size="0x1">1E</bytestring>
+  </ADXCSENDCOMMAND>
+
+  <ADXCSENDCOMMAND id="S1f" idhash="0xCD7B51DB" title="Send 1F">
+    <bytestring size="0x1">1F</bytestring>
+  </ADXCSENDCOMMAND>
+</ADXFORMAT>
